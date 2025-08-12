@@ -68,29 +68,8 @@ export default function HomePage() {
   }
 
   if (user) {
-    return (
-      <div className="min-h-screen relative overflow-hidden">
-        <AnimatedBackground variant="particles" />
-        <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
-          <Card className="w-full max-w-md backdrop-blur-sm bg-white/90 dark:bg-gray-900/90">
-            <CardHeader className="text-center">
-              <CardTitle className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-                Welcome Back!
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-center space-y-4">
-              <p className="text-muted-foreground">
-                Hello, <span className="font-semibold">{user.displayName || user.email}</span>
-              </p>
-              <p className="text-sm text-muted-foreground">You are successfully signed in to your account.</p>
-              <Button onClick={() => router.push("/login")} variant="outline" className="w-full">
-                Go to Login Page
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    )
+    router.push("/dashboard")
+    return null
   }
 
   return (
