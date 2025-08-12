@@ -255,7 +255,7 @@ export function AdvancedFilters({ filters, onFiltersChange, onReset }: AdvancedF
           )}
           {filters.amountRange.min !== null && (
             <Badge variant="secondary" className="gap-1">
-              Min: ${filters.amountRange.min}
+              Min: ₹{filters.amountRange.min}
               <X
                 className="h-3 w-3 cursor-pointer"
                 onClick={() =>
@@ -268,7 +268,7 @@ export function AdvancedFilters({ filters, onFiltersChange, onReset }: AdvancedF
           )}
           {filters.amountRange.max !== null && (
             <Badge variant="secondary" className="gap-1">
-              Max: ${filters.amountRange.max}
+              Max: ₹{filters.amountRange.max}
               <X
                 className="h-3 w-3 cursor-pointer"
                 onClick={() =>

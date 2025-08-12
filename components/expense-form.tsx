@@ -134,7 +134,7 @@ export function ExpenseForm({ onSuccess }: ExpenseFormProps) {
                     name="amount"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Amount ($)</FormLabel>
+                        <FormLabel>Amount (₹)</FormLabel>
                         <FormControl>
                           <motion.div
                             whileFocus={{ scale: 1.02 }}

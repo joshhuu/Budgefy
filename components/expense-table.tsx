@@ -192,7 +192,7 @@ export function ExpenseTable() {
                             </Badge>
                           </motion.div>
                         </TableCell>
-                        <TableCell className="font-mono">${expense.amount.toFixed(2)}</TableCell>
+                        <TableCell className="font-mono">₹{expense.amount.toFixed(2)}</TableCell>
                         <TableCell>{format(new Date(expense.date), "MMM dd, yyyy")}</TableCell>
                         <TableCell className="text-right">
                           <div className="flex justify-end gap-2">

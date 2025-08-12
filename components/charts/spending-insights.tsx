@@ -77,14 +77,14 @@ export function SpendingInsights() {
     {
       title: "Top Category",
       value: topCategory?.[0] || "None",
-      description: `$${topCategory?.[1]?.toFixed(2) || "0.00"} total`,
+  description: `₹${topCategory?.[1]?.toFixed(2) || "0.00"} total`,
       icon: Target,
       color: "text-blue-600",
       bgColor: "bg-blue-100 dark:bg-blue-900",
     },
     {
       title: "This Week",
-      value: `$${thisWeekTotal.toFixed(2)}`,
+  value: `₹${thisWeekTotal.toFixed(2)}`,
       description: `${thisWeekExpenses.length} expenses`,
       icon: TrendingUp,
       color: "text-purple-600",
@@ -92,7 +92,7 @@ export function SpendingInsights() {
     },
     {
       title: "Largest Expense",
-      value: `$${largestExpense?.amount?.toFixed(2) || "0.00"}`,
+  value: `₹${largestExpense?.amount?.toFixed(2) || "0.00"}`,
       description: largestExpense?.title || "None",
       icon: AlertTriangle,
       color: "text-orange-600",
@@ -126,7 +126,7 @@ export function SpendingInsights() {
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground">Average per expense</span>
             <span className="font-medium">
-              $
+              ₹
               {expenses.length > 0
                 ? (expenses.reduce((sum, e) => sum + e.amount, 0) / expenses.length).toFixed(2)
                 : "0.00"}

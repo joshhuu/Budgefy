@@ -9,7 +9,6 @@ import { ThemeProvider } from "@/components/theme-provider"
 export const metadata: Metadata = {
   title: "Personal Expense Tracker",
   description: "Track your expenses with beautiful analytics and insights",
-  generator: "v0.dev",
 }
 
 export default function RootLayout({

@@ -92,7 +92,7 @@ export default function DashboardPage() {
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.5, type: "spring", stiffness: 300 }}
                 >
-                  {expensesLoading ? "..." : `$${stats.total.toFixed(2)}`}
+                  {expensesLoading ? "..." : `₹${stats.total.toFixed(2)}`}
                 </motion.div>
                 <p className="text-xs text-muted-foreground">All time spending</p>
               </CardContent>
@@ -114,7 +114,7 @@ export default function DashboardPage() {
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.6, type: "spring", stiffness: 300 }}
                 >
-                  {expensesLoading ? "..." : `$${stats.monthly.toFixed(2)}`}
+                  {expensesLoading ? "..." : `₹${stats.monthly.toFixed(2)}`}
                 </motion.div>
                 <p className="text-xs text-muted-foreground">Current month spending</p>
               </CardContent>
@@ -158,7 +158,7 @@ export default function DashboardPage() {
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.8, type: "spring", stiffness: 300 }}
                 >
-                  {expensesLoading ? "..." : `$${stats.average.toFixed(2)}`}
+                  {expensesLoading ? "..." : `₹${stats.average.toFixed(2)}`}
                 </motion.div>
                 <p className="text-xs text-muted-foreground">Monthly average</p>
               </CardContent>
