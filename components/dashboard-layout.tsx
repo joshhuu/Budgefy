@@ -6,6 +6,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
+import type { Variants } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
@@ -27,24 +28,19 @@ const navigation = [
     href: "/dashboard/analytics",
     icon: PieChart,
   },
-  {
-    name: "Settings",
-    href: "/dashboard/settings",
-    icon: Settings,
-  },
 ]
 
 interface DashboardLayoutProps {
   children: React.ReactNode
 }
 
-const sidebarVariants = {
+const sidebarVariants: Variants = {
   hidden: { x: -300, opacity: 0 },
   visible: {
     x: 0,
     opacity: 1,
     transition: {
-      type: "spring",
+      type: "spring" as const,
       stiffness: 300,
       damping: 30,
       staggerChildren: 0.1,
@@ -52,12 +48,12 @@ const sidebarVariants = {
   },
 }
 
-const navItemVariants = {
+const navItemVariants: Variants = {
   hidden: { x: -20, opacity: 0 },
   visible: {
     x: 0,
     opacity: 1,
-    transition: { type: "spring", stiffness: 300, damping: 30 },
+    transition: { type: "spring" as const, stiffness: 300, damping: 30 },
   },
 }
 
@@ -101,7 +97,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             <DollarSign className="h-4 w-4 text-white" />
           </motion.div>
           <span className="text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            ExpenseTracker
+            Expense Monitor
           </span>
         </div>
       </motion.div>
@@ -141,7 +137,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       <div className="relative z-10 flex h-screen">
         {/* Desktop Sidebar */}
         <div className="hidden lg:flex lg:w-64 lg:flex-col">
-          <div className="flex flex-col backdrop-blur-sm bg-white/90 dark:bg-gray-900/90 border-r border-white/20">
+          <div className="flex flex-col backdrop-blur-lg bg-transparent shadow-xl">
             <SidebarContent />
           </div>
         </div>
@@ -153,13 +149,13 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               <Button
                 variant="ghost"
                 size="sm"
-                className="lg:hidden fixed top-4 left-4 z-50 backdrop-blur-sm bg-white/90 dark:bg-gray-900/90"
+                className="lg:hidden fixed top-4 left-4 z-50 backdrop-blur-lg bg-transparent shadow-xl"
               >
                 <Menu className="h-5 w-5" />
               </Button>
             </motion.div>
           </SheetTrigger>
-          <SheetContent side="left" className="w-64 p-0 backdrop-blur-sm bg-white/95 dark:bg-gray-900/95">
+          <SheetContent side="left" className="w-64 p-0 backdrop-blur-lg bg-transparent shadow-xl">
             {/* Visually hidden title for accessibility */}
             <span className="sr-only">
               <span role="heading" aria-level={1}>Sidebar Navigation</span>
@@ -171,7 +167,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         {/* Main Content */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Top Bar with user info and actions */}
-          <div className="flex items-center justify-end gap-4 px-6 py-4 border-b border-white/20 bg-white/90 dark:bg-gray-900/90">
+          <div className="flex items-center justify-end gap-4 px-6 py-4 bg-transparent backdrop-blur-lg shadow-lg">
             <ThemeToggle />
             {/* User Avatar with Popover */}
             <Popover>

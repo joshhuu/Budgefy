@@ -1,4 +1,6 @@
+
 "use client"
+import React from "react"
 
 import { useAuth } from "@/contexts/auth-context"
 import { useRouter } from "next/navigation"
@@ -67,8 +69,13 @@ export default function HomePage() {
     )
   }
 
+  // Redirect to dashboard if user is logged in
+  React.useEffect(() => {
+    if (user) {
+      router.push("/dashboard")
+    }
+  }, [user, router])
   if (user) {
-    router.push("/dashboard")
     return null
   }
 

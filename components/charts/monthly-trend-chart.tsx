@@ -83,9 +83,9 @@ export function MonthlyTrendChart() {
       return (
         <div className="bg-background border border-border rounded-lg p-3 shadow-lg">
           <p className="font-medium">{label}</p>
-          <p className="text-sm text-blue-600">Total: ${data.total.toFixed(2)}</p>
+          <p className="text-sm text-blue-600">Total: ₹{data.total.toLocaleString()}</p>
           <p className="text-sm text-muted-foreground">{data.count} expenses</p>
-          {data.count > 0 && <p className="text-sm text-muted-foreground">Avg: ${data.average.toFixed(2)}</p>}
+          {data.count > 0 && <p className="text-sm text-muted-foreground">Avg: ₹{data.average.toLocaleString(undefined, {maximumFractionDigits:0})}</p>}
         </div>
       )
     }
@@ -121,7 +121,7 @@ export function MonthlyTrendChart() {
               <LineChart data={monthlyData}>
                 <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
                 <XAxis dataKey="shortMonth" />
-                <YAxis tickFormatter={(value) => `$${value}`} />
+                <YAxis domain={[0, 5000]} tickFormatter={(value) => `₹${value}`} />
                 <Tooltip content={<CustomTooltip />} />
                 <Line
                   type="monotone"
@@ -136,7 +136,7 @@ export function MonthlyTrendChart() {
               <BarChart data={monthlyData}>
                 <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
                 <XAxis dataKey="shortMonth" />
-                <YAxis tickFormatter={(value) => `$${value}`} />
+                <YAxis domain={[0, 5000]} tickFormatter={(value) => `₹${value}`} />
                 <Tooltip content={<CustomTooltip />} />
                 <Bar dataKey="total" fill="#3b82f6" radius={[4, 4, 0, 0]} />
               </BarChart>

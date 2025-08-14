@@ -6,6 +6,7 @@ import { useEffect } from "react"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { ExpensePieChart } from "@/components/charts/expense-pie-chart"
 import { MonthlyTrendChart } from "@/components/charts/monthly-trend-chart"
+import { DailySpendingTrendChart } from "@/components/charts/daily-spending-trend-chart"
 import { SpendingInsights } from "@/components/charts/spending-insights"
 
 export default function AnalyticsPage() {
@@ -40,10 +41,13 @@ export default function AnalyticsPage() {
           <p className="text-muted-foreground">Insights and trends from your expense data</p>
         </div>
 
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <ExpensePieChart />
           <MonthlyTrendChart />
         </div>
+
+        <DailySpendingTrendChart />
 
         <SpendingInsights />
       </div>
