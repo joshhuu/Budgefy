@@ -12,7 +12,8 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useAuth } from "@/contexts/auth-context"
 import { AnimatedBackground } from "@/components/animated-background"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { LayoutDashboard, PieChart, Settings, LogOut, Menu, DollarSign, TrendingUp, User } from "lucide-react"
+import { LayoutDashboard, PieChart, Settings, LogOut, Menu, DollarSign, TrendingUp } from "lucide-react"
+import { Avatar } from "@/components/ui/avatar"
 import { cn } from "@/lib/utils"
 
 const navigation = [
@@ -176,7 +177,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             <Popover>
               <PopoverTrigger asChild>
                 <button className="flex items-center gap-2 focus:outline-none">
-                  <img src="/placeholder-user.jpg" alt="User" className="h-8 w-8 rounded-full border" />
+                  <Avatar name={user?.displayName || user?.email || "User"} size={32} />
                   <span className="font-medium text-sm">{user?.displayName || "User"}</span>
                 </button>
               </PopoverTrigger>
