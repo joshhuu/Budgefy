@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import * as XLSX from "xlsx"
 import { format } from "date-fns"
 import { motion, AnimatePresence } from "framer-motion"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
@@ -57,6 +58,22 @@ export function ExpenseTable() {
     dateRange: { from: null, to: null },
     amountRange: { min: null, max: null },
   })
+
+  // Excel download handler
+  const handleDownloadExcel = () => {
+    if (filteredExpenses.length === 0) return;
+    // Prepare data for Excel
+    const data = filteredExpenses.map(exp => ({
+      Date: format(new Date(exp.date), "yyyy-MM-dd"),
+      Category: exp.category,
+      Title: exp.title,
+      Amount: exp.amount,
+    }));
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Expenses");
+    XLSX.writeFile(workbook, "expenses.xlsx");
+  }
 
   const resetFilters = () => {
     setFilters({
@@ -131,11 +148,15 @@ export function ExpenseTable() {
     >
       <Card className="backdrop-blur-sm bg-white/90 dark:bg-gray-900/90">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Search className="h-5 w-5" />
-            Expenses ({filteredExpenses.length})
-          </CardTitle>
-
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-2">
+              <Search className="h-5 w-5" />
+              Expenses ({filteredExpenses.length})
+            </CardTitle>
+            <Button variant="outline" size="sm" onClick={handleDownloadExcel} disabled={filteredExpenses.length === 0}>
+              Download Excel
+            </Button>
+          </div>
           <AdvancedFilters filters={filters} onFiltersChange={setFilters} onReset={resetFilters} />
         </CardHeader>
 

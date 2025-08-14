@@ -191,6 +191,10 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             </motion.div>
           </SheetTrigger>
           <SheetContent side="left" className="w-64 p-0 backdrop-blur-sm bg-white/95 dark:bg-gray-900/95">
+            {/* Visually hidden title for accessibility */}
+            <span className="sr-only">
+              <span role="heading" aria-level={1}>Sidebar Navigation</span>
+            </span>
             <SidebarContent />
           </SheetContent>
         </Sheet>
