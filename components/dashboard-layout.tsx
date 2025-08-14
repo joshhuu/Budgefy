@@ -16,6 +16,7 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { LayoutDashboard, PieChart, Settings, LogOut, Menu, DollarSign, TrendingUp } from "lucide-react"
 import { Avatar } from "@/components/ui/avatar"
 import { cn } from "@/lib/utils"
+import type { Transition } from "framer-motion"
 
 const navigation = [
   {
@@ -63,7 +64,7 @@ const pageVariants = {
   out: { opacity: 0, y: -20 },
 }
 
-const pageTransition = {
+const pageTransition: Transition = {
   type: "tween",
   ease: "anticipate",
   duration: 0.4,
@@ -107,10 +108,13 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       <nav className="flex-1 space-y-1 p-4">
         {navigation.map((item, index) => {
           const isActive = pathname === item.href
+          // Prefetch analytics page for faster navigation
+          const prefetch = item.href === "/dashboard/analytics" ? true : undefined
           return (
             <motion.div key={item.name} variants={navItemVariants} whileHover={{ x: 4 }} whileTap={{ scale: 0.98 }}>
               <Link
                 href={item.href}
+                prefetch={prefetch}
                 className={cn(
                   "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                   isActive
@@ -132,7 +136,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      <AnimatedBackground variant="geometric" />
+  <AnimatedBackground variant="particles" />
 
       <div className="relative z-10 flex h-screen">
         {/* Desktop Sidebar */}

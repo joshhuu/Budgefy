@@ -5,6 +5,7 @@ import { GeistMono } from "geist/font/mono"
 import "./globals.css"
 import { AuthProvider } from "@/contexts/auth-context"
 import { ThemeProvider } from "@/components/theme-provider"
+import { RouteChangeIndicator } from "@/components/route-change-indicator"
 
 export const metadata: Metadata = {
   title: "Personal Expense Tracker",
@@ -29,6 +30,7 @@ html {
       </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <RouteChangeIndicator />
           <AuthProvider>{children}</AuthProvider>
         </ThemeProvider>
       </body>
