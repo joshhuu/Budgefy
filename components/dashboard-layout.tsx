@@ -7,6 +7,7 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useAuth } from "@/contexts/auth-context"
 import { AnimatedBackground } from "@/components/animated-background"
@@ -104,21 +105,6 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         </div>
       </motion.div>
 
-      {/* User Info */}
-      <motion.div className="border-b border-white/20 p-6" variants={navItemVariants}>
-        <div className="flex items-center gap-3">
-          <motion.div
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-500"
-            whileHover={{ scale: 1.05 }}
-          >
-            <User className="h-5 w-5 text-white" />
-          </motion.div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium truncate">{user?.displayName || "User"}</p>
-            <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
-          </div>
-        </div>
-      </motion.div>
 
       {/* Navigation */}
       <nav className="flex-1 space-y-1 p-4">
@@ -144,24 +130,6 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         })}
       </nav>
 
-      {/* Footer */}
-      <motion.div className="border-t border-white/20 p-4 space-y-2" variants={navItemVariants}>
-        <div className="flex items-center justify-between">
-          <span className="text-xs text-muted-foreground">Theme</span>
-          <ThemeToggle />
-        </div>
-        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleLogout}
-            className="w-full justify-start text-muted-foreground hover:text-foreground"
-          >
-            <LogOut className="mr-2 h-4 w-4" />
-            Sign Out
-          </Button>
-        </motion.div>
-      </motion.div>
     </motion.div>
   )
 
@@ -201,22 +169,29 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
         {/* Main Content */}
         <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Mobile Header */}
-          <motion.div
-            className="lg:hidden backdrop-blur-sm bg-white/90 dark:bg-gray-900/90 border-b border-white/20 px-4 py-3"
-            initial={{ y: -50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 ml-12">
-                <TrendingUp className="h-5 w-5 text-blue-600" />
-                <span className="font-semibold">Dashboard</span>
-              </div>
-              <ThemeToggle />
-            </div>
-          </motion.div>
-
+          {/* Top Bar with user info and actions */}
+          <div className="flex items-center justify-end gap-4 px-6 py-4 border-b border-white/20 bg-white/90 dark:bg-gray-900/90">
+            <ThemeToggle />
+            {/* User Avatar with Popover */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <button className="flex items-center gap-2 focus:outline-none">
+                  <img src="/placeholder-user.jpg" alt="User" className="h-8 w-8 rounded-full border" />
+                  <span className="font-medium text-sm">{user?.displayName || "User"}</span>
+                </button>
+              </PopoverTrigger>
+              <PopoverContent align="end" className="w-48 p-2">
+                <div className="flex flex-col gap-1">
+                  <Link href="/dashboard/settings" className="flex items-center gap-2 px-3 py-2 rounded hover:bg-muted transition-colors">
+                    <Settings className="h-4 w-4" /> Settings
+                  </Link>
+                  <Button variant="ghost" size="sm" onClick={handleLogout} className="flex items-center gap-2 justify-start px-3 py-2 rounded text-muted-foreground hover:text-foreground hover:bg-muted">
+                    <LogOut className="h-4 w-4" /> Sign Out
+                  </Button>
+                </div>
+              </PopoverContent>
+            </Popover>
+          </div>
           {/* Page Content with animations */}
           <main className="flex-1 overflow-y-auto">
             <AnimatePresence mode="wait">

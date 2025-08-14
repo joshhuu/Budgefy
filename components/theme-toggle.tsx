@@ -3,28 +3,37 @@ import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import { motion } from "framer-motion"
 
-import { Button } from "@/components/ui/button"
+
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme()
-
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light")
-  }
-
+  const isDark = theme === "dark"
+  const toggleTheme = () => setTheme(isDark ? "light" : "dark")
   return (
-    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-      <Button variant="ghost" size="sm" onClick={toggleTheme} className="h-8 w-8 px-0">
-        <motion.div
-          initial={false}
-          animate={{ rotate: theme === "dark" ? 180 : 0 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
-        >
-          <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-        </motion.div>
-        <span className="sr-only">Toggle theme</span>
-      </Button>
-    </motion.div>
+    <button
+      onClick={toggleTheme}
+      aria-label="Toggle theme"
+      className={`relative flex items-center w-12 h-7 rounded-full transition-colors duration-300 focus:outline-none border ${isDark ? "bg-gray-800 border-gray-700" : "bg-gray-200 border-gray-300"}`}
+    >
+      {/* Track */}
+      <span className="absolute left-2 text-yellow-400">
+        <Sun className="h-4 w-4" />
+      </span>
+      <span className="absolute right-2 text-blue-600">
+        <Moon className="h-4 w-4" />
+      </span>
+      {/* Thumb */}
+      <motion.span
+        className={`absolute top-1/2 -translate-y-1/2 w-6 h-6 rounded-full shadow-md flex items-center justify-center transition-colors duration-300 ${isDark ? "bg-gray-900" : "bg-white"}`}
+        animate={{ x: isDark ? 24 : 0 }}
+        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+      >
+        {isDark ? (
+          <Moon className="h-4 w-4 text-blue-400" />
+        ) : (
+          <Sun className="h-4 w-4 text-yellow-400" />
+        )}
+      </motion.span>
+    </button>
   )
 }
