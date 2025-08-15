@@ -17,6 +17,7 @@ import { LayoutDashboard, PieChart, Settings, LogOut, Menu, DollarSign, Trending
 import { Avatar } from "@/components/ui/avatar"
 import { cn } from "@/lib/utils"
 import type { Transition } from "framer-motion"
+import Image from "next/image"
 
 const navigation = [
   {
@@ -91,14 +92,20 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       <motion.div className="flex h-16 items-center border-b border-white/20 px-6" variants={navItemVariants}>
         <div className="flex items-center gap-2">
           <motion.div
-            className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-purple-600"
+            className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 p-1"
             whileHover={{ scale: 1.1, rotate: 5 }}
             whileTap={{ scale: 0.95 }}
           >
-            <DollarSign className="h-4 w-4 text-white" />
+            <Image 
+              src="/favicon.png" 
+              alt="Budgefy Logo" 
+              width={24} 
+              height={24} 
+              className="rounded-sm"
+            />
           </motion.div>
           <span className="text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Expense Monitor
+            Budgefy
           </span>
         </div>
       </motion.div>

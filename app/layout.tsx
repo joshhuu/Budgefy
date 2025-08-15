@@ -8,8 +8,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { RouteChangeIndicator } from "@/components/route-change-indicator"
 
 export const metadata: Metadata = {
-  title: "Personal Expense Tracker",
-  description: "Track your expenses with beautiful analytics and insights",
+  title: "Budgefy - Personal Expense Tracker",
+  description: "Track your expenses effortlessly with smart categorization and insightful analytics",
   icons: {
     icon: [
       { url: '/favicon.png', sizes: '32x32', type: 'image/png' },

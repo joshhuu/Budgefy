@@ -86,7 +86,7 @@ export default function HomePage() {
         <Card className="w-full max-w-md backdrop-blur-sm bg-white/90 dark:bg-gray-900/90">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Expense Monitor
+              Budgefy
             </CardTitle>
           </CardHeader>
           <CardContent className="text-center space-y-4">

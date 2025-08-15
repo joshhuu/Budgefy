@@ -71,7 +71,7 @@ export default function DashboardPage() {
       <motion.div className="p-6 space-y-6" variants={containerVariants} initial="hidden" animate="visible">
         {/* Header */}
         <motion.div variants={cardVariants}>
-          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Budgefy Dashboard</h1>
           <p className="text-muted-foreground">Welcome back, {user.displayName || user.email?.split("@")[0]}</p>
         </motion.div>
 
@@ -82,7 +82,7 @@ export default function DashboardPage() {
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Total Expenses</CardTitle>
                 <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.5 }}>
-                  <DollarSign className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-lg font-bold text-muted-foreground">₹</span>
                 </motion.div>
               </CardHeader>
               <CardContent>
