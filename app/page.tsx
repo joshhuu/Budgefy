@@ -86,12 +86,12 @@ export default function HomePage() {
         <Card className="w-full max-w-md backdrop-blur-sm bg-white/90 dark:bg-gray-900/90">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Authentication Demo
+              Expense Monitor
             </CardTitle>
           </CardHeader>
           <CardContent className="text-center space-y-4">
             <p className="text-muted-foreground">
-              A simple Firebase authentication demo with beautiful animated backgrounds.
+              Track your expenses effortlessly with smart categorization and insightful analytics.
             </p>
             <div className="space-y-3">
               <Button onClick={() => router.push("/login")} className="w-full">
