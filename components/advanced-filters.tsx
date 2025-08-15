@@ -7,10 +7,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Calendar } from "@/components/ui/calendar"
 import { Badge } from "@/components/ui/badge"
 import { EXPENSE_CATEGORIES } from "@/types/expense"
-import { Filter, X, CalendarIcon, DollarSign } from "lucide-react"
+import { Filter, X, CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 
@@ -79,33 +78,34 @@ export function AdvancedFilters({ filters, onFiltersChange, onReset }: AdvancedF
               )}
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-96 p-0" align="end">
-            <Card className="border-0 shadow-none">
-              <CardHeader className="pb-3">
+          <PopoverContent className="w-72 p-0 bg-background border shadow-lg" align="end">
+            <Card className="border-0 shadow-none bg-transparent">
+              <CardHeader className="pb-1 px-3 pt-3 border-b bg-muted/20">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-base">Advanced Filters</CardTitle>
+                  <CardTitle className="text-xs font-semibold text-foreground">Filters</CardTitle>
                   {hasActiveFilters && (
-                    <Button variant="ghost" size="sm" onClick={onReset}>
-                      <X className="h-4 w-4 mr-1" />
+                    <Button variant="outline" size="sm" onClick={onReset} className="text-xs h-6 px-2">
+                      <X className="h-3 w-3 mr-1" />
                       Clear
                     </Button>
                   )}
                 </div>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-2 px-3 pb-3">
                 {/* Categories */}
                 <div>
-                  <Label className="text-sm font-medium">Categories</Label>
-                  <div className="grid grid-cols-2 gap-2 mt-2">
+                  <Label className="text-xs font-medium mb-2 block">Categories</Label>
+                  <div className="grid grid-cols-2 gap-x-2 gap-y-1">
                     {EXPENSE_CATEGORIES.map((category) => (
                       <div key={category} className="flex items-center space-x-2">
                         <Checkbox
                           id={category}
                           checked={filters.categories.includes(category)}
                           onCheckedChange={() => toggleCategory(category)}
+                          className="h-3 w-3 flex-shrink-0"
                         />
-                        <Label htmlFor={category} className="text-xs cursor-pointer">
-                          {category}
+                        <Label htmlFor={category} className="text-xs cursor-pointer leading-none flex-1 min-w-0">
+                          {category.replace(" & ", " ")}
                         </Label>
                       </div>
                     ))}
@@ -114,73 +114,52 @@ export function AdvancedFilters({ filters, onFiltersChange, onReset }: AdvancedF
 
                 {/* Date Range */}
                 <div>
-                  <Label className="text-sm font-medium">Date Range</Label>
-                  <div className="grid grid-cols-2 gap-2 mt-2">
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className={cn(
-                            "justify-start text-left font-normal bg-transparent",
-                            !filters.dateRange.from && "text-muted-foreground",
-                          )}
-                        >
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {filters.dateRange.from ? format(filters.dateRange.from, "MMM dd") : "From"}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={filters.dateRange.from || undefined}
-                          onSelect={(date) =>
-                            updateFilters({
-                              dateRange: { ...filters.dateRange, from: date || null },
-                            })
-                          }
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className={cn(
-                            "justify-start text-left font-normal bg-transparent",
-                            !filters.dateRange.to && "text-muted-foreground",
-                          )}
-                        >
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {filters.dateRange.to ? format(filters.dateRange.to, "MMM dd") : "To"}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={filters.dateRange.to || undefined}
-                          onSelect={(date) =>
-                            updateFilters({
-                              dateRange: { ...filters.dateRange, to: date || null },
-                            })
-                          }
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
+                  <Label className="text-xs font-medium mb-2 block">Date Range</Label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="space-y-1">
+                      <Label className="text-xs text-muted-foreground block">From</Label>
+                      <input
+                        type="date"
+                        value={filters.dateRange.from ? format(filters.dateRange.from, "yyyy-MM-dd") : ""}
+                        onChange={(e) =>
+                          updateFilters({
+                            dateRange: { 
+                              ...filters.dateRange, 
+                              from: e.target.value ? new Date(e.target.value) : null 
+                            },
+                          })
+                        }
+                        className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-2 text-xs ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-xs text-muted-foreground block">To</Label>
+                      <input
+                        type="date"
+                        value={filters.dateRange.to ? format(filters.dateRange.to, "yyyy-MM-dd") : ""}
+                        onChange={(e) =>
+                          updateFilters({
+                            dateRange: { 
+                              ...filters.dateRange, 
+                              to: e.target.value ? new Date(e.target.value) : null 
+                            },
+                          })
+                        }
+                        className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-2 text-xs ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      />
+                    </div>
                   </div>
                 </div>
 
                 {/* Amount Range */}
                 <div>
-                  <Label className="text-sm font-medium">Amount Range</Label>
-                  <div className="grid grid-cols-2 gap-2 mt-2">
-                    <div className="relative">
-                      <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Label className="text-xs font-medium mb-2 block">Amount (₹)</Label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="space-y-1">
+                      <Label className="text-xs text-muted-foreground block">Min</Label>
                       <Input
                         type="number"
-                        placeholder="Min"
+                        placeholder="0"
                         value={filters.amountRange.min || ""}
                         onChange={(e) =>
                           updateFilters({
@@ -190,14 +169,14 @@ export function AdvancedFilters({ filters, onFiltersChange, onReset }: AdvancedF
                             },
                           })
                         }
-                        className="pl-8 bg-transparent"
+                        className="bg-transparent h-9 text-xs"
                       />
                     </div>
-                    <div className="relative">
-                      <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <div className="space-y-1">
+                      <Label className="text-xs text-muted-foreground block">Max</Label>
                       <Input
                         type="number"
-                        placeholder="Max"
+                        placeholder="999999"
                         value={filters.amountRange.max || ""}
                         onChange={(e) =>
                           updateFilters({
@@ -207,7 +186,7 @@ export function AdvancedFilters({ filters, onFiltersChange, onReset }: AdvancedF
                             },
                           })
                         }
-                        className="pl-8 bg-transparent"
+                        className="bg-transparent h-9 text-xs"
                       />
                     </div>
                   </div>
@@ -229,7 +208,7 @@ export function AdvancedFilters({ filters, onFiltersChange, onReset }: AdvancedF
           ))}
           {filters.dateRange.from && (
             <Badge variant="secondary" className="gap-1">
-              From: {format(filters.dateRange.from, "MMM dd")}
+              From: {format(filters.dateRange.from, "MMM dd, yyyy")}
               <X
                 className="h-3 w-3 cursor-pointer"
                 onClick={() =>
@@ -242,7 +221,7 @@ export function AdvancedFilters({ filters, onFiltersChange, onReset }: AdvancedF
           )}
           {filters.dateRange.to && (
             <Badge variant="secondary" className="gap-1">
-              To: {format(filters.dateRange.to, "MMM dd")}
+              To: {format(filters.dateRange.to, "MMM dd, yyyy")}
               <X
                 className="h-3 w-3 cursor-pointer"
                 onClick={() =>

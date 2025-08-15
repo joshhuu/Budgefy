@@ -98,11 +98,19 @@ export function ExpenseTable() {
 
     // Date range filter
     const expenseDate = new Date(expense.date)
-    if (filters.dateRange.from && expenseDate < filters.dateRange.from) {
-      return false
+    if (filters.dateRange.from) {
+      const fromDate = new Date(filters.dateRange.from)
+      fromDate.setHours(0, 0, 0, 0)
+      if (expenseDate < fromDate) {
+        return false
+      }
     }
-    if (filters.dateRange.to && expenseDate > filters.dateRange.to) {
-      return false
+    if (filters.dateRange.to) {
+      const toDate = new Date(filters.dateRange.to)
+      toDate.setHours(23, 59, 59, 999)
+      if (expenseDate > toDate) {
+        return false
+      }
     }
 
     // Amount range filter
