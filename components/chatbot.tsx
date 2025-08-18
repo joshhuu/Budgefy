@@ -2,6 +2,7 @@
 "use client";
 import ReactMarkdown from 'react-markdown';
 import React, { useState, useRef, useEffect } from 'react';
+import { useExpenses } from '@/hooks/use-expenses';
 
 interface ChatbotProps {
   expenses: any[];
@@ -16,6 +17,7 @@ const Chatbot = ({ expenses, fullPage = false }: ChatbotProps) => {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { addExpense } = useExpenses();
 
   useEffect(() => {
     if (open && messagesEndRef.current) {
@@ -36,8 +38,69 @@ const Chatbot = ({ expenses, fullPage = false }: ChatbotProps) => {
         body: JSON.stringify({ messages: newMessages, expenses }),
       });
       const data = await res.json();
+      let handled = false;
       if (data.reply) {
-        setMessages([...newMessages, { role: 'assistant', content: data.reply }]);
+        // Try to robustly parse for add_expense intent
+        let replyText = data.reply.trim();
+        // Remove code block markers if present
+        if (replyText.startsWith('```') && replyText.endsWith('```')) {
+          replyText = replyText.replace(/^```[a-zA-Z]*\n?/, '').replace(/```$/, '').trim();
+        }
+        // Remove leading/trailing code block or markdown formatting
+        replyText = replyText.replace(/^```[a-zA-Z]*\n?/, '').replace(/```$/, '').trim();
+        // Try parsing JSON
+        let parsed = null;
+        try {
+          parsed = JSON.parse(replyText);
+        } catch (e) {
+          // Log parse error for debugging
+          console.warn('Failed to parse Gemini reply as JSON:', replyText, e);
+        }
+        if (parsed && parsed.add_expense) {
+          const { title, amount, category, date } = parsed.add_expense;
+          // Sanitize and validate fields for Firestore rules
+          if (
+            typeof title === 'string' &&
+            typeof category === 'string' &&
+            typeof date === 'string' &&
+            typeof amount === 'number' &&
+            title && category && date
+          ) {
+            // Only allowed fields
+            const expenseForFirestore = { title, amount, category, date };
+            try {
+              await addExpense(expenseForFirestore);
+              setMessages([
+                ...newMessages,
+                { role: 'assistant', content: 'Expense added successfully!' }
+              ]);
+            } catch (err: any) {
+              // Log error and data for debugging
+              console.error('Add expense failed:', err, expenseForFirestore);
+              setMessages([
+                ...newMessages,
+                {
+                  role: 'assistant',
+                  content:
+                    'Failed to add expense: ' +
+                    (err?.message || 'Unknown error. Are you logged in?') +
+                    '\n\nDebug info:' +
+                    '\nData sent: ' + JSON.stringify(expenseForFirestore) +
+                    (err?.stack ? '\nStack: ' + err.stack : ''),
+                },
+              ]);
+            }
+          } else {
+            setMessages([
+              ...newMessages,
+              { role: 'assistant', content: 'Sorry, I could not add the expense. Some details are missing or invalid (title, amount, category, or date).' },
+            ]);
+          }
+          handled = true;
+        }
+        if (!handled) {
+          setMessages([...newMessages, { role: 'assistant', content: data.reply }]);
+        }
       } else {
         setMessages([...newMessages, { role: 'assistant', content: 'Sorry, I could not get a response.' }]);
       }
