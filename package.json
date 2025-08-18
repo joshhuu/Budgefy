@@ -54,6 +54,7 @@
     "react": "^19",
     "react-dom": "^19",
     "react-hook-form": "latest",
+    "react-markdown": "^10.1.0",
     "react-resizable-panels": "^2.1.7",
     "react-tsparticles": "latest",
     "recharts": "latest",

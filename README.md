@@ -18,6 +18,12 @@ A modern, intuitive expense tracking application built with Next.js and Firebase
 - **Smart Categorization** across 10+ predefined categories
 - **Real-time Data** sync across devices
 
+### 🤖 AI-Powered Expense Chatbot
+- **Expense Chatbot** – Ask questions about your spending, get savings tips, and receive smart insights powered by **AI**
+- **Conversational UI** – Full-page chat experience with markdown rendering for structured, easy-to-read responses
+- **Context-Aware** – The chatbot uses your expense data to provide personalized advice
+- **Modern Design** – Responsive, visually appealing chat interface with clear iconography
+
 ### 🔍 Advanced Filtering
 - **Search Functionality** - Find expenses by title
 - **Category Filtering** - Filter by multiple categories

@@ -39,7 +39,7 @@ const cardVariants = {
 export default function DashboardPage() {
   const { user, loading } = useAuth()
   const router = useRouter()
-  const { stats, loading: expensesLoading } = useExpenses()
+  const { stats, loading: expensesLoading, expenses } = useExpenses()
 
   useEffect(() => {
     if (!loading && !user) {
@@ -176,6 +176,7 @@ export default function DashboardPage() {
           </motion.div>
         </motion.div>
       </motion.div>
+  {/* Chatbot removed: now only available at /dashboard/chatbot */}
     </DashboardLayout>
   )
 }
