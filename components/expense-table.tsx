@@ -157,15 +157,24 @@ export function ExpenseTable() {
     setEditData({});
   };
 
-  const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to delete this expense?")) {
-      try {
-        await deleteExpense(id)
-      } catch (error) {
-        console.error("Error deleting expense:", error)
-      }
+  const [deleteMessage, setDeleteMessage] = useState<string | null>(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null);
+
+  const handleDelete = (id: string) => {
+    setShowDeleteConfirm(id);
+  };
+
+  const confirmDelete = async (id: string) => {
+    try {
+      await deleteExpense(id);
+      setDeleteMessage('Expense deleted successfully!');
+    } catch (error) {
+      setDeleteMessage('Error deleting expense.');
+    } finally {
+      setShowDeleteConfirm(null);
+      setTimeout(() => setDeleteMessage(null), 2500);
     }
-  }
+  };
 
   if (loading) {
     return (
@@ -344,6 +353,25 @@ export function ExpenseTable() {
           )}
         </CardContent>
       </Card>
+      {/* Delete confirmation modal rendered at root for proper centering */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-background rounded-lg shadow-lg p-6 w-full max-w-xs flex flex-col items-center">
+            <p className="mb-4 text-center">Are you sure you want to delete this expense?</p>
+            <div className="flex gap-3">
+              <Button size="sm" className="bg-destructive text-white" onClick={() => confirmDelete(showDeleteConfirm)}>Delete</Button>
+              <Button size="sm" variant="outline" onClick={() => setShowDeleteConfirm(null)}>Cancel</Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete toast/snackbar */}
+      {deleteMessage && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-lg bg-background border border-border text-foreground animate-fade-in">
+          {deleteMessage}
+        </div>
+      )}
     </motion.div>
   )
 }
