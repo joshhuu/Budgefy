@@ -3,6 +3,7 @@
 import { useAuth } from "@/contexts/auth-context"
 import { useRouter } from "next/navigation"
 import { useEffect, Suspense, lazy } from "react"
+import { AUTH_REDIRECT_PATH } from "@/lib/constants"
 import { DashboardLayout } from "@/components/dashboard-layout"
 
 const ExpensePieChart = lazy(() => import("@/components/charts/expense-pie-chart").then(m => ({ default: m.ExpensePieChart })))
@@ -16,7 +17,7 @@ export default function AnalyticsPage() {
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push("/login")
+  router.push(AUTH_REDIRECT_PATH)
     }
   }, [user, loading, router])
 

@@ -10,12 +10,12 @@ import {
   Wallet, 
   Shield, 
   Smartphone,
-  Users,
+  
   Star,
   Github,
   Linkedin,
-  LogIn,
-  UserPlus
+  UserPlus,
+  ChevronDown
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -109,108 +109,44 @@ const LandingPage = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-background">
+    <motion.div
+      initial={{ opacity: 0, y: 12, scale: 0.995 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
+      className="min-h-screen bg-background"
+    >
       {/* Particle Background */}
       <ParticleBackground />
       
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-background/80 border-b">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          {/* Logo */}
-          <motion.div 
-            className="flex items-center space-x-2"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-purple-500 rounded-lg flex items-center justify-center">
-              <Wallet className="h-5 w-5 text-white" />
-            </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-green-600 to-purple-600 bg-clip-text text-transparent">
-              Budgefy
-            </span>
-          </motion.div>
-
-          {/* Navigation Links */}
-          <motion.div 
-            className="hidden md:flex items-center space-x-8"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <button 
-              onClick={() => scrollToSection("home")} 
-              className="text-sm font-medium hover:text-primary transition-colors cursor-pointer"
-            >
-              Home
-            </button>
-            <button 
-              onClick={() => scrollToSection("features")} 
-              className="text-sm font-medium hover:text-primary transition-colors cursor-pointer"
-            >
-              Features
-            </button>
-            <a 
-              href="/analytics" 
-              className="text-sm font-medium hover:text-primary transition-colors"
-            >
-              Analytics
-            </a>
-          </motion.div>
-
-          {/* Auth Buttons */}
-          <motion.div 
-            className="flex items-center space-x-4"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <ThemeToggle />
-            <Button 
-              variant="ghost" 
-              size="sm"
-              onClick={() => openAuthModal("login")}
-              className="hidden sm:flex"
-            >
-              <LogIn className="mr-2 h-4 w-4" />
-              Login
-            </Button>
-            <Button 
-              size="sm"
-              onClick={() => openAuthModal("signup")}
-              className="bg-gradient-to-r from-green-500 to-purple-500 hover:from-green-600 hover:to-purple-600 text-white"
-            >
-              <UserPlus className="mr-2 h-4 w-4" />
-              <span className="hidden sm:inline">Signup</span>
-              <span className="sm:hidden">Join</span>
-            </Button>
-          </motion.div>
+      {/* Minimal header: only theme toggle (header intentionally removed per design) */}
+      <div className="fixed top-4 right-4 z-50">
+        <div className="flex items-center">
+          <ThemeToggle />
         </div>
-      </nav>
+      </div>
 
       {/* Hero Section */}
-      <section id="home" className="relative pt-32 pb-20 px-4">
-        <div className="container mx-auto text-center">
+      <section id="home" className="relative pt-32 pb-20 px-4 min-h-screen flex items-center">
+        <div className="container mx-auto text-center flex flex-col justify-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="max-w-4xl mx-auto"
           >
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-10 leading-tight">
               Track smart, spend smarter with{" "}
               <span className="bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Budgefy
-              </span>{" "}
-              💰
+              </span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
               A modern, intuitive expense tracker that helps you analyze patterns, 
               control spending, and build smarter financial habits.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
               <Button 
                 size="lg" 
                 onClick={() => openAuthModal("signup")}
@@ -219,44 +155,45 @@ const LandingPage = () => {
                 Get Started
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button 
-                size="lg" 
-                variant="outline"
-                onClick={() => window.location.href = "/analytics"}
-                className="border-2 hover:bg-primary hover:text-primary-foreground transition-all duration-300 px-8 py-3 text-lg"
-              >
-                See Analytics
-                <BarChart3 className="ml-2 h-5 w-5" />
-              </Button>
             </div>
 
-            {/* Trust indicators */}
-            <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Shield className="h-4 w-4 text-green-500" />
-                <span>Bank-level Security</span>
+            {/* Decorative blurred gradient and scroll hint */}
+            <div className="relative">
+              <div className="absolute left-1/2 -translate-x-1/2 bottom-6 pointer-events-none">
+                <div className="w-48 h-48 rounded-full bg-gradient-to-r from-green-500 to-purple-500 opacity-5 blur-3xl" />
               </div>
-              <div className="flex items-center gap-2">
-                <Users className="h-4 w-4 text-blue-500" />
-                <span>10k+ Happy Users</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Star className="h-4 w-4 text-yellow-500 fill-current" />
-                <span>4.9/5 Rating</span>
-              </div>
+              <motion.div
+                className="flex justify-center mt-6"
+                initial={{ y: 0, opacity: 0 }}
+                animate={{ y: 6, opacity: 1 }}
+                transition={{ repeat: Infinity, repeatType: "reverse", duration: 1.2 }}
+              >
+                <button
+                  type="button"
+                  aria-label="Scroll down to features"
+                  aria-controls="features"
+                  title="Scroll to features"
+                  onClick={() => scrollToSection("features")}
+                  className="text-muted-foreground"
+                >
+                  <ChevronDown className="h-6 w-6" />
+                </button>
+              </motion.div>
             </div>
+
+            
           </motion.div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 px-4 bg-gradient-to-b from-background to-muted/30">
+  <section id="features" className="py-20 px-4 bg-gradient-to-b from-background to-muted/30">
         <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.2 }}
             className="text-center mb-16"
           >
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
@@ -274,7 +211,7 @@ const LandingPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.2 }}
                 whileHover={{ y: -8, scale: 1.02 }}
                 className="group"
               >
@@ -448,7 +385,7 @@ const LandingPage = () => {
         onOpenChange={setAuthModalOpen}
         defaultTab={authMode}
       />
-    </div>
+    </motion.div>
   )
 }
 

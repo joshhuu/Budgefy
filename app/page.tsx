@@ -8,6 +8,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { AlertTriangle } from "lucide-react"
 import { AnimatedBackground } from "@/components/animated-background"
 import LandingPage from "@/components/landing-page"
+import Preloader from "@/components/preloader"
 
 export default function HomePage() {
   const { user, loading, isConfigured } = useAuth()
@@ -17,13 +18,7 @@ export default function HomePage() {
     return (
       <div className="min-h-screen relative overflow-hidden">
         <AnimatedBackground variant="particles" />
-        <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
-          <Card className="w-96 backdrop-blur-sm bg-white/90 dark:bg-gray-900/90">
-            <CardContent className="flex items-center justify-center p-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-            </CardContent>
-          </Card>
-        </div>
+        <Preloader />
       </div>
     )
   }

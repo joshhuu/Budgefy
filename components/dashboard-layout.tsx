@@ -14,6 +14,7 @@ import { useAuth } from "@/contexts/auth-context"
 import { AnimatedBackground } from "@/components/animated-background"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { LayoutDashboard, PieChart, Settings, LogOut, Menu, DollarSign, TrendingUp } from "lucide-react"
+import { AUTH_REDIRECT_PATH } from "@/lib/constants"
 // import ChatbotSidebar from "@/components/chatbot-sidebar"
 import { useExpenses } from "@/hooks/use-expenses"
 import { Avatar } from "@/components/ui/avatar"
@@ -82,7 +83,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   const handleLogout = async () => {
     try {
       await logout()
-      router.push("/")
+  router.push(AUTH_REDIRECT_PATH)
     } catch (error) {
       console.error("Logout error:", error)
     }

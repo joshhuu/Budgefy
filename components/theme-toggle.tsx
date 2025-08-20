@@ -13,25 +13,27 @@ export function ThemeToggle() {
     <button
       onClick={toggleTheme}
       aria-label="Toggle theme"
-      className={`relative flex items-center w-12 h-7 rounded-full transition-colors duration-300 focus:outline-none border ${isDark ? "bg-gray-800 border-gray-700" : "bg-gray-200 border-gray-300"}`}
+      aria-pressed={isDark}
+      type="button"
+      className={`relative inline-flex items-center px-0.5 py-0.5 w-11 h-6 rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary border ${isDark ? "bg-gray-800 border-gray-700" : "bg-gray-200 border-gray-300"}`}
     >
-      {/* Track */}
-      <span className="absolute left-2 text-yellow-400">
-        <Sun className="h-4 w-4" />
+      {/* Track icons: small and aligned vertically centered */}
+      <span className="absolute left-1 top-1/2 -translate-y-1/2 text-yellow-400 pointer-events-none">
+        <Sun className="h-3.5 w-3.5" />
       </span>
-      <span className="absolute right-2 text-blue-600">
-        <Moon className="h-4 w-4" />
+      <span className="absolute right-1 top-1/2 -translate-y-1/2 text-blue-500 pointer-events-none">
+        <Moon className="h-3.5 w-3.5" />
       </span>
       {/* Thumb */}
       <motion.span
-        className={`absolute top-1/2 -translate-y-1/2 w-6 h-6 rounded-full shadow-md flex items-center justify-center transition-colors duration-300 ${isDark ? "bg-gray-900" : "bg-white"}`}
-        animate={{ x: isDark ? 24 : 0 }}
-        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+        className={`absolute left-1 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full shadow-sm flex items-center justify-center transition-colors duration-200 ${isDark ? "bg-gray-900" : "bg-white"}`}
+        animate={{ x: isDark ? 14 : 0 }}
+        transition={{ type: "spring", stiffness: 360, damping: 26 }}
       >
         {isDark ? (
-          <Moon className="h-4 w-4 text-blue-400" />
+          <Moon className="h-3.5 w-3.5 text-blue-400" />
         ) : (
-          <Sun className="h-4 w-4 text-yellow-400" />
+          <Sun className="h-3.5 w-3.5 text-yellow-400" />
         )}
       </motion.span>
     </button>
