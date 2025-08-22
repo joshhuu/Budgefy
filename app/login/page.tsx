@@ -119,3 +119,5 @@ export default function LoginPage() {
     </div>
   )
 }
+
+// Handle login form submission: calls signIn, handles loading state and errors
