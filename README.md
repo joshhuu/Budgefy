@@ -180,7 +180,7 @@ Visit the live application: **[https://budgefy.vercel.app](https://budgefy.verce
 
 ## 👨‍💻 Developer
 
-Created by Joshh
+Created by Josh
 
 ---
 
