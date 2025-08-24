@@ -76,7 +76,7 @@ User: ${messages[messages.length-1]?.content}
       return NextResponse.json({ error: 'No response from Gemini.', details: data }, { status: 500 });
     }
   } catch (err) {
-    console.error('Error calling Gemini API:', err);
+    console.error('Error in calling Gemini API:', err);
     return NextResponse.json({ error: 'Error calling Gemini API', details: String(err) }, { status: 500 });
   }
 }
