@@ -21,8 +21,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { AuthModal } from "@/components/auth-modal"
-import { ParticleBackground } from "@/components/particle-background"
-import { ThemeToggle } from "@/components/theme-toggle"
+import GlowBackground from "@/components/glow-background"
+import Prism from "@/components/Prism"
+// ...existing imports
 
 const LandingPage = () => {
   const [authModalOpen, setAuthModalOpen] = useState(false)
@@ -113,81 +114,78 @@ const LandingPage = () => {
       initial={{ opacity: 0, y: 12, scale: 0.995 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
-      className="min-h-screen bg-background"
+      className="min-h-screen bg-slate-900 text-slate-200 relative overflow-hidden"
     >
-      {/* Particle Background */}
-      <ParticleBackground />
-      
-      {/* Minimal header: only theme toggle (header intentionally removed per design) */}
-      <div className="fixed top-4 right-4 z-50">
-        <div className="flex items-center">
-          <ThemeToggle />
-        </div>
-      </div>
-
-      {/* Hero Section */}
-      <section id="home" className="relative pt-32 pb-20 px-4 min-h-screen flex items-center">
-        <div className="container mx-auto text-center flex flex-col justify-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto"
-          >
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-10 leading-tight">
-              Track smart, spend smarter with{" "}
-              <span className="bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Budgefy
-              </span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
-              A modern, intuitive expense tracker that helps you analyze patterns, 
-              control spending, and build smarter financial habits.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-              <Button 
-                size="lg" 
-                onClick={() => openAuthModal("signup")}
-                className="bg-gradient-to-r from-green-500 to-purple-500 hover:from-green-600 hover:to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-3 text-lg"
-              >
-                Get Started
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+      <GlowBackground />
+      <div className="relative z-10">
+        <section id="home" className="relative h-screen w-full px-0 m-0 flex items-start">
+          {/* Navbar */}
+          <header className="w-full absolute top-0 left-0 z-40">
+            <div className="container mx-auto px-6 py-4">
+              <nav className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-9 h-9 bg-gradient-to-r from-green-500 to-purple-500 rounded-lg flex items-center justify-center">
+                    <Wallet className="h-5 w-5 text-white" />
+                  </div>
+                  <span className="font-bold text-lg bg-gradient-to-r from-green-600 to-purple-600 bg-clip-text text-transparent">Budgefy</span>
+                </div>
+                <div className="hidden md:flex items-center space-x-6 text-sm text-slate-300">
+                  <button onClick={() => scrollToSection('home')} className="hover:text-white">Home</button>
+                  <button onClick={() => scrollToSection('features')} className="hover:text-white">Features</button>
+                  <a href="/analytics" className="hover:text-white">Analytics</a>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <button onClick={() => openAuthModal('login')} className="text-sm text-slate-300 hover:text-foreground">Log in</button>
+                  <Button size="sm" onClick={() => openAuthModal('signup')} className="bg-gradient-to-r from-green-500 to-purple-500 text-white px-3 py-1.5">Sign up</Button>
+                </div>
+              </nav>
             </div>
+          </header>
 
-            {/* Decorative blurred gradient and scroll hint */}
-            <div className="relative">
-              <div className="absolute left-1/2 -translate-x-1/2 bottom-6 pointer-events-none">
-                <div className="w-48 h-48 rounded-full bg-gradient-to-r from-green-500 to-purple-500 opacity-5 blur-3xl" />
-              </div>
-              <motion.div
-                className="flex justify-center mt-6"
-                initial={{ y: 0, opacity: 0 }}
-                animate={{ y: 6, opacity: 1 }}
-                transition={{ repeat: Infinity, repeatType: "reverse", duration: 1.2 }}
-              >
-                <button
-                  type="button"
-                  aria-label="Scroll down to features"
-                  aria-controls="features"
-                  title="Scroll to features"
-                  onClick={() => scrollToSection("features")}
-                  className="text-muted-foreground"
+          {/* Prism background with overlay text */}
+          <div style={{ width: '100%', height: '100vh', position: 'relative' }} className="w-full max-w-full mx-auto">
+            <Prism
+              animationType="rotate"
+              timeScale={0.5}
+              height={3.5}
+              baseWidth={5.5}
+              scale={3.6}
+              hueShift={0}
+              colorFrequency={1}
+              noise={0.5}
+              glow={1}
+            />
+
+            <div className="absolute inset-0 z-30 flex flex-col items-center justify-center text-center px-6">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight text-white">
+                Track smart, spend smarter with{' '}
+                <span className="bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">Budgefy</span>
+              </h1>
+              <p className="text-lg md:text-xl text-slate-300 max-w-2xl mb-6">
+                A modern, intuitive expense tracker that helps you analyze patterns, control spending, and build smarter financial habits.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Button
+                  size="lg"
+                  onClick={() => openAuthModal('signup')}
+                  className="bg-gradient-to-r from-green-500 to-purple-500 hover:from-green-600 hover:to-purple-600 text-white shadow-lg px-8 py-3 text-lg"
                 >
-                  <ChevronDown className="h-6 w-6" />
+                  Get Started
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+                <button
+                  onClick={() => scrollToSection('features')}
+                  className="text-sm text-slate-300 hover:text-foreground"
+                >
+                  Learn more
                 </button>
-              </motion.div>
+              </div>
             </div>
-
-            
-          </motion.div>
-        </div>
-      </section>
+          </div>
+        </section>
 
       {/* Features Section */}
-  <section id="features" className="py-20 px-4 bg-gradient-to-b from-background to-muted/30">
+  <section id="features" className="py-20 px-4 bg-slate-900">
         <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -199,7 +197,7 @@ const LandingPage = () => {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
               Powerful Features for Smart Money Management
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
               Visualize your money like never before – real-time analytics at your fingertips.
             </p>
           </motion.div>
@@ -215,17 +213,17 @@ const LandingPage = () => {
                 whileHover={{ y: -8, scale: 1.02 }}
                 className="group"
               >
-                <Card className="h-full hover:shadow-2xl transition-all duration-500 border-0 bg-card/50 backdrop-blur-sm group-hover:bg-card">
-                  <CardContent className="p-8">
+                <Card className="h-full hover:shadow-2xl transition-all duration-500 border border-slate-700 bg-slate-800/50 backdrop-blur-sm group-hover:bg-slate-800">
+                  <CardContent className="p-8 text-slate-100">
                     <div className="flex items-center mb-6">
                       <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-purple-500 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300">
                         <feature.icon className="h-7 w-7 text-white" />
                       </div>
-                      <h3 className="text-xl font-bold">{feature.title}</h3>
+                      <h3 className="text-xl font-bold text-white">{feature.title}</h3>
                     </div>
                     <ul className="space-y-3">
                       {feature.points.map((point, idx) => (
-                        <li key={idx} className="flex items-start text-muted-foreground group-hover:text-foreground transition-colors duration-300">
+                        <li key={idx} className="flex items-start text-slate-300 group-hover:text-white transition-colors duration-300">
                           <Star className="h-4 w-4 mr-3 mt-0.5 text-yellow-500 flex-shrink-0" />
                           <span className="text-sm leading-relaxed">{point}</span>
                         </li>
@@ -239,8 +237,8 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Categories Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-muted/30 to-background">
+  {/* Categories Section */}
+  <section className="py-20 px-4 bg-slate-900">
         <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -252,7 +250,7 @@ const LandingPage = () => {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
               Smart Category Management
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+    <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
               Organize your expenses with intelligent categorization and colorful visual indicators.
             </p>
           </motion.div>
@@ -289,7 +287,7 @@ const LandingPage = () => {
             viewport={{ once: true }}
             className="text-center mt-12"
           >
-            <p className="text-muted-foreground text-lg">
+            <p className="text-slate-300 text-lg">
               And many more categories with automatic smart detection! 🤖
             </p>
           </motion.div>
@@ -297,7 +295,7 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-16 px-4 border-t bg-gradient-to-b from-background to-muted/30">
+      <footer className="py-16 px-4 border-t border-slate-700 bg-slate-900">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             {/* Brand */}
@@ -310,30 +308,30 @@ const LandingPage = () => {
                   Budgefy
                 </span>
               </div>
-              <p className="text-muted-foreground max-w-xs">
+              <p className="text-slate-300 max-w-xs">
                 Making personal finance management simple, intuitive, and powerful for everyone.
               </p>
             </div>
 
             {/* Quick Links */}
             <div className="space-y-4">
-              <h4 className="font-semibold">Quick Links</h4>
+              <h4 className="font-semibold text-white">Quick Links</h4>
               <div className="space-y-2">
                 <button 
                   onClick={() => scrollToSection("home")}
-                  className="block text-muted-foreground hover:text-foreground transition-colors text-left"
+                  className="block text-slate-300 hover:text-white transition-colors text-left"
                 >
                   Home
                 </button>
                 <button 
                   onClick={() => scrollToSection("features")}
-                  className="block text-muted-foreground hover:text-foreground transition-colors text-left"
+                  className="block text-slate-300 hover:text-white transition-colors text-left"
                 >
                   Features
                 </button>
                 <a 
                   href="/analytics"
-                  className="block text-muted-foreground hover:text-foreground transition-colors"
+                  className="block text-slate-300 hover:text-white transition-colors"
                 >
                   Analytics
                 </a>
@@ -342,13 +340,13 @@ const LandingPage = () => {
 
             {/* Contact */}
             <div className="space-y-4">
-              <h4 className="font-semibold">Connect</h4>
+              <h4 className="font-semibold text-white">Connect</h4>
               <div className="flex items-center space-x-4">
                 <a 
                   href="https://github.com" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors p-2 hover:bg-muted rounded-lg"
+                  className="text-slate-300 hover:text-white transition-colors p-2 rounded-lg"
                 >
                   <Github className="h-5 w-5" />
                 </a>
@@ -356,7 +354,7 @@ const LandingPage = () => {
                   href="https://linkedin.com" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors p-2 hover:bg-muted rounded-lg"
+                  className="text-slate-300 hover:text-white transition-colors p-2 rounded-lg"
                 >
                   <Linkedin className="h-5 w-5" />
                 </a>
@@ -366,13 +364,13 @@ const LandingPage = () => {
 
           <div className="border-t pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center">
-              <p className="text-sm text-muted-foreground mb-4 md:mb-0">
+              <p className="text-sm text-slate-300 mb-4 md:mb-0">
                 © 2025 Budgefy. Built with ❤️ by{" "}
-                <span className="font-medium text-foreground">Joshh</span>. All rights reserved.
+                <span className="font-medium text-white">Joshh</span>. All rights reserved.
               </p>
               <div className="flex items-center space-x-6 text-sm text-muted-foreground">
-                <a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a>
-                <a href="#" className="hover:text-foreground transition-colors">Terms of Service</a>
+                <a href="#" className="text-slate-300 hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" className="text-slate-300 hover:text-white transition-colors">Terms of Service</a>
               </div>
             </div>
           </div>
@@ -385,6 +383,7 @@ const LandingPage = () => {
         onOpenChange={setAuthModalOpen}
         defaultTab={authMode}
       />
+      </div>
     </motion.div>
   )
 }

@@ -9,6 +9,7 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   updateProfile,
 } from "firebase/auth"
 import { auth, isFirebaseConfigured } from "@/lib/firebase"
@@ -19,6 +20,7 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<void>
   signUp: (email: string, password: string, name: string) => Promise<void>
   logout: () => Promise<void>
+  resetPassword: (email: string) => Promise<void>
   isConfigured: boolean
 }
 
@@ -64,12 +66,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await signOut(auth)
   }
 
+  const resetPassword = async (email: string) => {
+    if (!auth || !isFirebaseConfigured()) {
+      throw new Error("Firebase is not properly configured. Please check your environment variables.")
+    }
+    await sendPasswordResetEmail(auth, email)
+  }
+
   const value = {
     user,
     loading,
     signIn,
     signUp,
     logout,
+  resetPassword,
     isConfigured: isFirebaseConfigured(),
   }
 

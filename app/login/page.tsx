@@ -22,6 +22,9 @@ export default function LoginPage() {
 
   const { signIn } = useAuth()
   const router = useRouter()
+  const { resetPassword } = useAuth()
+  const [resetMessage, setResetMessage] = useState("")
+  const [resetLoading, setResetLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -35,6 +38,25 @@ export default function LoginPage() {
       setError(error.message || "Failed to sign in")
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleReset = async () => {
+    setResetMessage("")
+    setError("")
+    if (!email) {
+      setError("Please enter your email address to reset your password")
+      return
+    }
+
+    setResetLoading(true)
+    try {
+      await resetPassword(email)
+      setResetMessage("Password reset email sent. Check your inbox.")
+    } catch (err: any) {
+      setError(err.message || "Failed to send password reset email")
+    } finally {
+      setResetLoading(false)
     }
   }
 
@@ -103,6 +125,19 @@ export default function LoginPage() {
                   "Sign In"
                 )}
               </Button>
+              <div className="mt-2">
+                <button
+                  type="button"
+                  onClick={handleReset}
+                  className="w-full text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  disabled={resetLoading}
+                >
+                  {resetLoading ? "Sending..." : "Forgot password?"}
+                </button>
+                {resetMessage && (
+                  <div className="mt-2 text-sm text-green-600">{resetMessage}</div>
+                )}
+              </div>
             </form>
 
             <div className="mt-6 text-center">

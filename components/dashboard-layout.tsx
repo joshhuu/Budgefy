@@ -10,6 +10,7 @@ import type { Variants } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { SheetTitle } from "@/components/ui/sheet"
 import { useAuth } from "@/contexts/auth-context"
 import { AnimatedBackground } from "@/components/animated-background"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -92,9 +93,9 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   const SidebarContent = () => {
   // const showChatbot = pathname?.startsWith("/dashboard")
     return (
-  <motion.div className="flex h-full flex-col bg-transparent" variants={sidebarVariants} initial="hidden" animate="visible">
+  <motion.div className="flex h-full flex-col " variants={sidebarVariants} initial="hidden" animate="visible">
         {/* Logo/Brand */}
-  <motion.div className="flex h-16 items-center border-b border-white/20 px-6 bg-transparent" variants={navItemVariants}>
+  <motion.div className="flex h-16 items-center border-b border-white/20 px-6 " variants={navItemVariants}>
           <div className="flex items-center gap-2">
             <motion.div
               className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 p-1"
@@ -173,7 +174,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       <div className="relative z-10 flex h-screen">
         {/* Desktop Sidebar */}
         <div className="hidden lg:flex lg:w-64 lg:flex-col">
-          <div className="flex flex-col bg-transparent">
+          <div className="flex flex-col ">
             <SidebarContent />
           </div>
         </div>
@@ -185,17 +186,15 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               <Button
                 variant="ghost"
                 size="sm"
-                className="lg:hidden fixed top-4 left-4 z-50 bg-transparent"
+                className="lg:hidden fixed top-4 left-4 z-50 "
               >
                 <Menu className="h-5 w-5" />
               </Button>
             </motion.div>
           </SheetTrigger>
-          <SheetContent side="left" className="w-64 p-0 bg-transparent">
+          <SheetContent side="left" className="w-64 p-0 ">
             {/* Visually hidden title for accessibility */}
-            <span className="sr-only">
-              <span role="heading" aria-level={1}>Sidebar Navigation</span>
-            </span>
+            <SheetTitle className="sr-only">Sidebar Navigation</SheetTitle>
             <SidebarContent />
           </SheetContent>
         </Sheet>
@@ -203,7 +202,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         {/* Main Content */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Top Bar with user info and actions */}
-          <div className="flex items-center justify-end gap-4 px-6 py-4 bg-transparent">
+          <div className="flex items-center justify-end gap-4 px-6 py-4 ">
             <ThemeToggle />
             {/* User Avatar with Popover */}
             <Popover>

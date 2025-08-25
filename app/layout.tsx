@@ -4,6 +4,7 @@ import "./globals.css"
 import { AuthProvider } from "@/contexts/auth-context"
 import { ThemeProvider } from "@/components/theme-provider"
 import { RouteChangeIndicator } from "@/components/route-change-indicator"
+import GlowBackground from "@/components/glow-background"
 
 export const metadata: Metadata = {
   title: "Budgefy - Personal Expense Tracker",
@@ -38,7 +39,10 @@ html {
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <RouteChangeIndicator />
-          <AuthProvider>{children}</AuthProvider>
+          <div className="relative min-h-screen">
+            <GlowBackground />
+            <AuthProvider>{children}</AuthProvider>
+          </div>
         </ThemeProvider>
       </body>
     </html>

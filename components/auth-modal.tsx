@@ -64,7 +64,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   const [error, setError] = useState("")
   const [activeTab, setActiveTab] = useState(defaultTab)
 
-  const { signIn, signUp } = useAuth()
+  const { signIn, signUp, resetPassword } = useAuth()
 
   // Login form
   const loginForm = useForm<LoginFormData>({
@@ -127,8 +127,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     setError("")
     
     try {
-      // Note: Password reset functionality would need to be implemented in auth context
-      setError("Password reset functionality is not yet implemented")
+  await resetPassword(email)
+  setError("Password reset email sent. Check your inbox.")
     } catch (err: any) {
       setError(err.message || "Failed to send reset email")
     } finally {
