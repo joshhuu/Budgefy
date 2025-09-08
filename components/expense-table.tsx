@@ -3,7 +3,7 @@
 import { useState } from "react"
 import * as XLSX from "xlsx"
 import { format } from "date-fns"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, Variants } from "framer-motion"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -27,7 +27,7 @@ const categoryColors: Record<string, string> = {
 }
 
 // Added animation variants for table rows and interactions
-const tableVariants = {
+const tableVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -37,7 +37,7 @@ const tableVariants = {
   },
 }
 
-const rowVariants = {
+const rowVariants: Variants = {
   hidden: { opacity: 0, x: -20 },
   visible: {
     opacity: 1,

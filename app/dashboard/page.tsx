@@ -3,7 +3,8 @@
 import { useAuth } from "@/contexts/auth-context"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { motion } from "framer-motion"
+import { AUTH_REDIRECT_PATH } from "@/lib/constants"
+import { motion, Variants } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { TrendingUp, DollarSign, Calendar, PieChart } from "lucide-react"
 import { useExpenses } from "@/hooks/use-expenses"
@@ -12,7 +13,7 @@ import { ExpenseTable } from "@/components/expense-table"
 import { DashboardLayout } from "@/components/dashboard-layout"
 
 // Added animation variants for staggered card animations
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -23,7 +24,7 @@ const containerVariants = {
   },
 }
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { y: 20, opacity: 0 },
   visible: {
     y: 0,
@@ -43,7 +44,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push("/login")
+      router.push(AUTH_REDIRECT_PATH)
     }
   }, [user, loading, router])
 

@@ -3,6 +3,29 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--foreground));
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -120,4 +143,48 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Glow animations and utilities */
+@keyframes drift-1 {
+  0% { transform: translate3d(0,0,0) scale(1); }
+  25% { transform: translate3d(18px,-12px,0) scale(1.02); }
+  50% { transform: translate3d(0,6px,0) scale(1); }
+  75% { transform: translate3d(-12px,-8px,0) scale(0.98); }
+  100% { transform: translate3d(0,0,0) scale(1); }
+}
+
+@keyframes drift-2 {
+  0% { transform: translate3d(0,0,0) scale(1); }
+  30% { transform: translate3d(-20px,10px,0) scale(1.01); }
+  60% { transform: translate3d(8px,-6px,0) scale(0.995); }
+  100% { transform: translate3d(0,0,0) scale(1); }
+}
+
+.drift-slow { animation: drift-1 48s ease-in-out infinite; will-change: transform; }
+.drift-slower { animation: drift-2 72s ease-in-out infinite; will-change: transform; }
+
+/* Noise overlay using inline SVG - very low opacity for subtle texture */
+.glow-noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><filter id='a'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23a)' opacity='0.08' /></svg>");
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .drift-slow,
+  .drift-slower {
+    animation: none !important;
+  }
+}
+
+/* Responsive adjustments for the glow blobs */
+@media (max-width: 640px) {
+  .glow-blob-lg { width: 520px !important; height: 520px !important; top: -160px !important; left: -160px !important; }
+  .glow-blob-lg-2 { width: 480px !important; height: 480px !important; bottom: -160px !important; right: -160px !important; }
 }
