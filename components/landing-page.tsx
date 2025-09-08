@@ -132,7 +132,7 @@ const LandingPage = () => {
                 <div className="hidden md:flex items-center space-x-6 text-sm text-slate-300">
                   <button onClick={() => scrollToSection('home')} className="hover:text-white">Home</button>
                   <button onClick={() => scrollToSection('features')} className="hover:text-white">Features</button>
-                  <a href="/analytics" className="hover:text-white">Analytics</a>
+                  
                 </div>
                 <div className="flex items-center space-x-3">
                   <button onClick={() => openAuthModal('login')} className="text-sm text-slate-300 hover:text-foreground">Log in</button>
@@ -329,12 +329,7 @@ const LandingPage = () => {
                 >
                   Features
                 </button>
-                <a 
-                  href="/analytics"
-                  className="block text-slate-300 hover:text-white transition-colors"
-                >
-                  Analytics
-                </a>
+                
               </div>
             </div>
 
@@ -343,7 +338,7 @@ const LandingPage = () => {
               <h4 className="font-semibold text-white">Connect</h4>
               <div className="flex items-center space-x-4">
                 <a 
-                  href="https://github.com" 
+                  href="https://github.com/joshhuu" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-slate-300 hover:text-white transition-colors p-2 rounded-lg"
@@ -351,7 +346,7 @@ const LandingPage = () => {
                   <Github className="h-5 w-5" />
                 </a>
                 <a 
-                  href="https://linkedin.com" 
+                  href="https://linkedin.com/in/joshua08" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-slate-300 hover:text-white transition-colors p-2 rounded-lg"

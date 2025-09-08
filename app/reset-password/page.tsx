@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { confirmPasswordReset } from "firebase/auth"
 import { auth } from "@/lib/firebase"
@@ -11,7 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Eye, EyeOff, Loader2, CheckCircle, AlertTriangle } from "lucide-react"
 import { AnimatedBackground } from "@/components/animated-background"
 
-export default function ResetPasswordPage() {
+function ResetPasswordContent() {
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
@@ -206,5 +206,26 @@ export default function ResetPasswordPage() {
         </Card>
       </div>
     </div>
+  )
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen relative overflow-hidden">
+        <AnimatedBackground variant="particles" />
+        <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
+          <Card className="w-full max-w-md backdrop-blur-sm bg-white/90 dark:bg-gray-900/90 border-white/20">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin" />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    }>
+      <ResetPasswordContent />
+    </Suspense>
   )
 }
