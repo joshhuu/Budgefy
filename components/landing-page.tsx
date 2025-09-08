@@ -360,13 +360,10 @@ const LandingPage = () => {
           <div className="border-t pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <p className="text-sm text-slate-300 mb-4 md:mb-0">
-                © 2025 Budgefy. Built with ❤️ by{" "}
-                <span className="font-medium text-white">Joshh</span>. All rights reserved.
+                © 2025 Budgefy.
+                
               </p>
-              <div className="flex items-center space-x-6 text-sm text-muted-foreground">
-                <a href="#" className="text-slate-300 hover:text-white transition-colors">Privacy Policy</a>
-                <a href="#" className="text-slate-300 hover:text-white transition-colors">Terms of Service</a>
-              </div>
+              
             </div>
           </div>
         </div>
